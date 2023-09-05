@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Requests</title>
+    <link rel="stylesheet" type="text/css" href="/css/friends.css" th:href="@{/css/friends.css}">
+</head>
+<body>
+<div class="fixed-buttons">
+    <a href="javascript:history.go(-1)">
+        <button>Back</button>
+    </a>
+</div>
+<div class="container">
+    <div class="friends-box">
+        <h2 id="your-friends">Your requests</h2>
+        <ul class="friends-list">
+            <li th:each="personRequest:${unacceptedRequests}">
+                <div class="friend-card">
+                    <a th:href="@{/user/{id}(id=${personRequest.getId()})}">
+                        <img th:src="@{'/user/image/' + ${personRequest.getId()}}" src="/emptyProfilePicture.png" onerror="this.src='/emptyProfilePicture.png'" alt="Friend">
+                    </a>
+                    <div class="friend-info">
+                        <div class="friend-text">
+                            <a th:href="@{/user/{id}(id=${personRequest.getId()})}" th:text="${personRequest.getUsername()}">Friend</a>
+                            <p th:text="${personRequest.getAboutMe()}">Description</p>
+                        </div>
+                        <form th:method="PATCH" th:action="@{/user/accept-friend/{id}(id=${personRequest.getId()})}">
+                            <button type="submit" class="message-button">Accept</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

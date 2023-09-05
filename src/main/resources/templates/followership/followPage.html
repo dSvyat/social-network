@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<head>
+    <meta charset="UTF-8">
+    <title>Followings</title>
+    <link rel="stylesheet" type="text/css" href="/css/friends.css" th:href="@{/css/friends.css}">
+</head>
+<body>
+<div class="fixed-buttons">
+    <a href="javascript:history.back()">
+        <button>Back</button>
+    </a>
+    <div sec:authorize="isAuthenticated()">
+        <a th:href="@{/followers/{id}(id=${person.getId()})}">
+            <button>Followers</button>
+        </a>
+    </div>
+</div>
+<div class="container">
+    <div class="friends-box">
+        <h2 id="your-friends">Followed</h2>
+        <ul class="follow-list">
+            <li th:each="person:${followings}">
+                <div class="friend-card">
+                    <a th:href="@{/user/{id}(id=${person.getId()})}">
+                        <img th:src="@{'/user/image/' + ${person.getId()}}" alt="Friend">
+                    </a>
+                    <div id="follow-info">
+                        <div class="friend-text">
+                            <a th:href="@{/user/{id}(id=${person.getId()})}"
+                               th:text="${person.getUsername()}">Person</a>
+                            <p th:text="${person.getAboutMe()}">Description</p>
+                        </div>
+                        <div sec:authorize="isAuthenticated()">
+                            <button th:data-name="${person.getId()}"
+                                    onclick="deleteFollowing(this.getAttribute('data-name'))"
+                                    class='unfollow-button'>
+                                Unfollow
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+    <div class="know-them-box">
+            <h2 id="new-friends">Recommended for you</h2>
+            <ul class="know-them-list">
+                <li th:each="person:${mostFollowed}" th:if="${person.getUsername() != #authentication.getName()}">
+                    <div class="friend-card">
+                        <a th:href="@{/user/{id}(id=${person.getId()})}">
+                            <img th:src="@{'/user/image/' + ${person.getId()}}">
+                        </a>
+                        <div id="rec-follow-info">
+                            <div class="friend-text">
+                                <a th:href="@{/user/{id}(id=${person.getId()})}"
+                                   th:text="${person.getUsername()}">Person</a>
+                                <p th:text="${person.getAboutMe()}">Description</p>
+                            </div>
+                            <div sec:authorize="isAuthenticated()">
+                                <button th:data-name="${person.getId()}"
+                                        onclick="addFollowing(this.getAttribute('data-name'))" class='follow-button'>
+                                    Follow
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script th:src="@{/javascript/followPage.js}" src="/javascript/followPage.js"></script>
+</body>
+</html>

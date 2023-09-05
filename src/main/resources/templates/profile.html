@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/profile.css" th:href="@{/css/profile.css}">
+</head>
+
+<body>
+<div class="container">
+    <div class="card">
+        <div class="profile-info">
+            <div th:if="${person.getUsername() == #authentication.getName()}">
+                <div class="profile-picture">
+                    <img id="image" th:src="@{'/user/image/' + ${person.getId()}}"/>
+                    <div class="overlay" th:if="${person.username == #authentication.getName()}">
+                        <label for="upload-button" class="choose-picture-text">Choose picture</label>
+                    </div>
+                </div>
+                <form id="upload-form" th:action="@{/uploadProfilePicture}" th:method="POST"
+                      enctype="multipart/form-data">
+                    <input type="file" id="upload-button" class="upload-button" name="profilePic" accept="image/*"
+                           onchange="document.getElementById('upload-form').submit()">
+                </form>
+            </div>
+            <div class="profile-picture" th:if="${person.username != #authentication.getName()}">
+                <img class="profile-image" th:src="@{'/user/image/' + ${person.getId()}}" alt="//Error//"
+                     onerror="this.src='/emptyProfilePicture.png'">
+            </div>
+
+            <p> </p>
+            <a class="text-muted" th:href="@{/friends/{id}(id=${person.getId()})}" th:text="'Friends: ' + ${friendsAmount}"></a>
+            <p></p>
+            <a class="text-muted" th:href="@{/followers/{id}(id=${person.getId()})}" th:text="'Followers: ' + ${followersAmount}"></a>
+            <p></p>
+            <a class="text-muted" th:href="@{/followings/{id}(id=${person.getId()})}" th:text="'Followed: ' + ${followedAmount}"></a>
+
+            <div class="profile-details">
+                <h2 th:text="${person.getGivenName() + ' ' +person.getSurname()}">John Doe</h2>
+                <p class="text-muted" th:text="${'Date of birth: ' + person.getDateOfBirth()}">2</p>
+                <p class="text-muted" th:text="${'Email: ' + person.getEmail()}">3</p>
+                <p class="text-muted" th:text="${'Username: ' + person.getUsername()}">4</p>
+                <p class="text-muted" th:text="${'Country: ' + person.getCountry()}">5</p>
+                <p class="text-muted" th:text="${'Joined: ' +person.getJoiningDate()}"></p>
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <a href="/login">
+                <button class="friend-button">Login to see more!</button>
+                </a>
+            </div>
+
+            <div sec:authorize="isAuthenticated()">
+                <a href="javascript:history.go(-1)">
+                    <button class="back-button">Back</button>
+                </a>
+                <button th:data-name="${person.getId()}"
+                        th:if="${person.username != #authentication.getName()} and ${!friendshipExists}"
+                        onclick="changeFollowButton()" class="friend-button" id="add-friend-button">Add friend
+                </button>
+                <p></p>
+                <button th:if="${person.username != #authentication.getName()} and ${!followershipExists}"
+                        th:data-name="${person.getId()}"
+                        class="friend-button" id="follow-button" onclick="addFollowing()">Follow
+                </button>
+
+                <button th:if="${friendshipRequestedByCurrent} and ${requestNotAccepted}"
+                        class="friend-request-sent-button">Request was sent
+                </button>
+
+                <button th:if="${followershipExists}"
+                        class="friend-request-sent-button">Following
+                </button>
+
+                <form th:if="${friendshipExists} and ${!friendshipRequestedByCurrent} and ${requestNotAccepted}"
+                      th:method="PATCH" th:action="@{/user/accept-friend-profile/{id}/{id}(id=${person.getId()})}">
+                    <button type="submit" class="friend-button">Accept</button>
+                </form>
+
+                <button class="friend-request-sent-button" th:if="${friendshipExists} and ${!requestNotAccepted}">Your
+                    friend
+                </button>
+
+            </div>
+            <div th:if="${person.username == #authentication.getName()}">
+                <a th:href="@{/user/{id}/edit(id=${person.getId()})}">
+                    <button class="edit-button">Edit profile</button>
+                </a>
+                <p></p>
+                <form th:method="DELETE" th:action="@{/user/{id}/delete(id=${person.getId()})}">
+                    <button onclick="deleteConfirm()" type="submit" class="delete-button" value="Delete account">Delete account</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <form class="about-me" th:method="POST" th:action="@{/user/{id}(id=${person.getId()})}" th:object="${person}"
+              th:if="${person.username == #authentication.getName()}">
+            <h2>About Me</h2>
+            <textarea class="about-me-text" placeholder="Enter your bio" th:field="*{aboutMe}"></textarea>
+            <input type="submit" class="submit-button" value="Submit changes"/>
+        </form>
+
+        <div class="about-me" th:unless="${person.username == #authentication.getName()}">
+            <h2>About Me</h2>
+            <p class="about-me-p" th:text="${person.getAboutMe()}"></p>
+        </div>
+    </div>
+</div>
+
+</div>
+<script th:src="@{/javascript/profile.js}" src="/javascript/profile.js"></script>
+</body>
+
+</html>

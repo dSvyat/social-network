@@ -1,0 +1,176 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #b92b27, #1565c0)
+}
+
+.card{
+    margin-bottom:20px;
+    border:none;
+}
+
+.box {
+    border-radius: 25px;
+    width: 500px;
+    padding: 40px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #191919;
+;
+    text-align: center;
+    transition: 0.25s;
+    margin-top: 100px
+}
+
+.box input[type="text"],
+.box input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+
+.box h1 {
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500
+}
+
+.box input[type="text"]:focus,
+.box input[type="date"]:focus,
+.box input[type="password"]:focus {
+    width: 300px;
+    border-color: #2ecc71
+}
+
+.box input[type="submit"],
+.back-button{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer
+}
+
+.back-button:hover{
+    background-color: #2ecc71;
+}
+
+.box input[type="submit"]:hover {
+    background: #2ecc71
+}
+
+.forgot {
+    text-decoration: underline
+}
+
+.text-muted{
+    color: #6c757d;
+}
+
+#popup{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(to right, #ff0000, #00ff00);
+    padding: 20px;
+    color: black;
+}
+
+select {
+    width: 273px; /* Adjust width as needed */
+    padding: 10px;
+    border: 2px solid #3498db; /* Blue border */
+    border-radius: 24px;
+    background-color: #191919;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: 0.25s;
+    -webkit-appearance: none; /* Remove default arrow */
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.date-picker {
+    border: 2px solid #3498db;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: #6c757d; /* Default text color */
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+.date-picker:focus {
+    border-color: #2ecc71;
+}
+
+.date-picker::-webkit-input-placeholder {
+    color: #6c757d; /* Placeholder text color */
+}
+
+/* Style the select dropdown options */
+select option {
+    text-align: center;
+    background-color: #191919; /* background on option hover */
+    color: white;
+}
+
+/* Style the select dropdown scroll icon */
+select::-webkit-scrollbar {
+    width: 10px;
+}
+
+select::-webkit-scrollbar-track {
+    background-color: #191919;
+}
+
+select::-webkit-scrollbar-thumb {
+    background-color: #2ecc71; /* Green scroll thumb */
+    border-radius: 5px;
+}
+
+/* Style the select dropdown on hover */
+select:hover {
+    background-color: #191919;
+    border-color: #2ecc71; /* Green border on hover */
+}
+
+/* Style the select dropdown when focused */
+select:focus {
+    border-color: #2ecc71; /* Green border when focused */
+    box-shadow: 0 0 5px rgba(53, 81, 103, 0.5);
+    width: 300px; /* Expanded width */
+}
+
+
+
+

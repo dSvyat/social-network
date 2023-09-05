@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/registration.css" th:href="@{/css/registration.css}">
+    <meta charset="UTF-8">
+    <title>Register</title>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <form class="box" th:method="POST" th:action="@{/registration}" th:object="${person}">
+                    <h1>Registration</h1>
+                    <p class="text-muted"> Please enter your information</p>
+
+                    <input type="text" th:field="*{givenName}" placeholder="Given name">
+                    <p style="color: crimson" th:if="${#fields.hasErrors('givenName')}" th:errors="*{givenName}">Name error</p>
+
+                    <input type="text" th:field="*{surname}" placeholder="Surname">
+                    <p style="color: crimson" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</p>
+
+                    <input type="text" th:field="*{username}" placeholder="Username">
+                    <p style="color: crimson" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</p>
+
+                    <select class="text-muted" th:field="*{country}">
+                        <option th:each="country : ${countries}" th:value="${country.toString()}" th:text="${country.toString()}">Country</option>
+                    </select>
+
+                    <input type="text" th:field="*{email}"  name="email" placeholder="Email">
+                    <p style="color: crimson" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</p>
+
+                    <input class="date-picker" id="datePicker" type="date" th:field="*{dateOfBirth}" name="dateOfBirth">
+                    <p style="color: crimson" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date error</p>
+
+                    <input type="password" th:field="*{password}"  name="password" placeholder="Password">
+                    <p style="color: crimson" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</p>
+
+                    <input type="password" th:field="*{confirmPassword}" name="confirm-password" placeholder="Confirm password">
+                    <p style="color: crimson" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Password error</p>
+
+                    <a class="forgot text-muted" href="/login">Login</a>
+                    <input type="submit" value="Registrate">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

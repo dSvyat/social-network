@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Friends</title>
+    <link rel="stylesheet" type="text/css" href="/css/friends.css" th:href="@{/css/friends.css}">
+</head>
+<body>
+<div class="fixed-buttons">
+    <a href="javascript:history.go(-1)">
+        <button>Back</button>
+    </a>
+    <div th:if="${person.getUsername() == #authentication.getName()}">
+        <a href="/user/friend-requests">
+            <button th:text="'Requests '+'('+${unacceptedCount} + ')'">Requests</button>
+        </a>
+    </div>
+</div>
+<div class="container">
+    <div class="friends-box">
+        <h2 id="your-friends">Friends</h2>
+        <ul class="friends-list">
+            <li th:each="friend:${friends}">
+                <div class="friend-card">
+                    <a th:href="@{/user/{id}(id=${friend.getId()})}">
+                        <img th:src="@{'/user/image/' + ${friend.getId()}}" alt="Friend">
+                    </a>
+                    <div class="friend-info">
+                        <div class="friend-text">
+                            <a th:href="@{/user/{id}(id=${friend.getId()})}"
+                               th:text="${friend.getUsername()}">Friend</a>
+                            <p th:text="${friend.getAboutMe()}">Description</p>
+                        </div>
+                        <a th:href="@{/user/{id}(id=${friend.getId()})}">
+                            <button class="message-button">View profile</button>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="know-them-box">
+        <h2 id="new-friends">You may know them</h2>
+        <ul class="know-them-list">
+            <li th:each="person:${people}" th:if="${person.getUsername() != #authentication.getName()}">
+                <div class="friend-card">
+                    <a th:href="@{/user/{id}(id=${person.getId()})}">
+                        <img th:src="@{'/user/image/' + ${person.getId()}}"
+                             onerror="this.src='/emptyProfilePicture.png'" alt="Person 1">
+                    </a>
+                    <div class="friend-info">
+                        <div class="friend-text">
+                            <a th:href="@{/user/{id}(id=${person.getId()})}"
+                               th:text="${person.getUsername()}">Person</a>
+                            <p th:text="${person.getAboutMe()}">Description</p>
+                        </div>
+                        <a th:href="@{/user/{id}(id=${person.getId()})}">
+                            <button class="message-button">View profile</button>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

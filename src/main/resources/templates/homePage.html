@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/homePage.css" th:href="@{/css/homePage.css}"/>
+</head>
+<body>
+<div class="container">
+    <div class="profile-info">
+        <a th:href="@{/followings/{id}(id=${person.getId()})}">
+            <button class="followers-button">Followings</button>
+        </a>
+        <a th:href="@{/user/{id}(id = ${person.getId()})}">
+            <img class="profile-img" th:src="@{'/user/image/' + ${person.getId()}}"
+                 onerror="this.src='/emptyProfilePicture.png'"/>
+        </a>
+        <a th:href="@{/friends/{id}(id=${person.getId()})}">
+            <button class="friends-button">Friends</button>
+        </a>
+    </div>
+    <div class="posts">
+        <button class="posts-text">+New post</button>
+        <ul>
+            <li class="post" th:each="post:${posts}">
+                <a th:href="@{/user/{id}(id=${post.getAuthor().getId()})}">
+                    <p><img class="post-profile-img" th:src="@{'/user/image/'+${post.getAuthor().getId()}}">
+                </a>
+                <div class="post-date" th:text="${post.getCreatedAt().format(formatter)}">
+                    01.08.2023 10:41
+                </div>
+                </p>
+                <img class="post-img" th:each="image:${post.getPostImageList()}"
+                     th:src="@{'/post/image/'+${image.getFileKey()}}"/>
+                <p th:text="${post.getText()}" class="post-text">
+                    Post text here
+                </p>
+                <button th:attr="class='like-btn '+${post.isLikedBy(person) ? 'pressed' : ''}"
+                        th:data-name="${post.getId()}"
+                        th:onclick="addLike(this.getAttribute('data-name'))" th:text="${post.getLikes() +'❤'}">0 ❤
+                </button>
+                <button th:data-id="${post.getId()}" onclick="deletePost(this.getAttribute('data-id'))"
+                        th:if="${post.getAuthor().getUsername() == #authentication.getName()}" id="delete-button">
+                    Delete
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="modal hidden">
+    <form th:method="POST" th:action="@{/uploadPost}" th:object="${post}" enctype="multipart/form-data">
+        <button type="reset" class="close-modal">&times;</button>
+        <div class="new-post">New post</div>
+        <textarea
+                class="new-post-text"
+                type="text"
+                placeholder="Write anything you want"
+                th:field="*{text}"></textarea>
+        <p></p>
+        <label class="label">
+            <input multiple="multiple" type="file" accept="image/*" name="postImgs"/>
+            <span>Select photo for post</span>
+        </label>
+        <p></p>
+        <button type="submit" class="submit-button">Post</button>
+    </form>
+</div>
+<div class="overlay hidden"></div>
+<script th:src="@{/javascript/homePage.js}" src="/javascript/homePage.js"></script>
+</body>
+</html>

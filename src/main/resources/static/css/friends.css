@@ -1,0 +1,129 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #b92b27, #1565c0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 90%;
+}
+.fixed-buttons {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #191919;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    z-index: 9999;
+    transition: 0.25s;
+}
+
+.fixed-buttons button {
+    margin: 0 10px;
+    border: #2ecc71 2px solid;
+    padding: 8px 20px;
+    background: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background-color 0.25s;
+}
+
+.fixed-buttons button:hover {
+    background-color: #27ae60;
+}
+
+.friends-box {
+    background-color: #191919;
+    border-radius: 24px;
+    padding: 10px;
+    margin-bottom: 40px;
+    margin-left: 20%;
+    margin-right: 20%;
+    transition: 0.25s;
+
+}
+
+.know-them-box {
+    background-color: #191919;
+    border-radius: 24px;
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    transition: 0.25s;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+}
+
+.friends-list,
+.know-them-list,
+.follow-list{
+    list-style-type: none;
+    padding: 0;
+}
+
+.friend-card {
+    display: flex;
+    align-items: center;
+    border: 1px solid #6c757d;
+    border-radius: 24px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.friend-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.friend-info,
+#follow-info,
+#rec-follow-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.friend-text a {
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+}
+
+.friend-text p {
+    margin-top: 10px;
+    color: #6c757d;
+}
+
+.message-button,
+.follow-button,
+.unfollow-button{
+    border: 2px solid #2ecc71;
+    background-color: transparent;
+    color: white;
+    border-radius: 24px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.message-button:hover,
+.follow-button:hover,
+.unfollow-button:hover{
+    background-color: #2ecc71;
+}
