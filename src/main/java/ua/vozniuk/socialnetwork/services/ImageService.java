@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ImageService {
-    private static final String BUCKET_NAME = "dvsctest1";
-    private final static String ACCESS_KEY ="AKIAVPFOWW55SWI633W3";
-    private final static String SECRET_KEY="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";
+    private static final String BUCKET_NAME = "";
+    private final static String ACCESS_KEY ="";
+    private final static String SECRET_KEY="";
     public static void saveFile(MultipartFile multipartFile, String name){
         ObjectMetadata data = new ObjectMetadata();
         data.setContentType(multipartFile.getContentType());
